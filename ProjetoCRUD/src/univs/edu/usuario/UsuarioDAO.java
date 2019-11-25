@@ -28,6 +28,13 @@ public class UsuarioDAO {
         sessao.close();
         
     }
+    public void editarUsuario(Usuario usuario){
+        sessao = HibernateUtil.getSessionFactory().openSession();
+        transacao = sessao.beginTransaction();
+        sessao.update(usuario);
+        transacao.commit();
+        sessao.close();
+    }
     
     
      public void excluir(Usuario usuario){
@@ -39,12 +46,13 @@ public class UsuarioDAO {
         
     }
      
-     public Usuario pesquisar(int id){
+     public Usuario pesquisarUsuarioId(int id){
           sessao = HibernateUtil.getSessionFactory().openSession();
         transacao = sessao.beginTransaction();
         
         Usuario usuario = (Usuario) sessao.createCriteria(Usuario.class).add(Restrictions.eq("idUsuario",id)).uniqueResult();
         
+        sessao.close();
         return usuario;
          
          
@@ -60,5 +68,9 @@ public class UsuarioDAO {
          
          
      }
+
+    public List<Usuario> listarUsuario() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
      
 }

@@ -27,7 +27,12 @@ public class TelaUsuario extends javax.swing.JFrame {
              tfUsuario.setText("");
              tfSenha.setText("");
     }
-
+    
+    public void atualizarCamposConsulta(){
+        tfUsuario.setText(usuario.getLogin());
+        tfSenha.setText(usuario.getSenha());
+        tfNome.setText(usuario.getNomeUsuario());
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -175,14 +180,21 @@ public class TelaUsuario extends javax.swing.JFrame {
         usuario.setNomeUsuario(tfNome.getText());
         usuario.setLogin(tfUsuario.getText());
         usuario.setSenha(tfSenha.getText());
-        dao.salvar(usuario);
+        if(usuario.getIdUsuario()!=0){
+            dao.editarUsuario(usuario);
+            JOptionPane.showMessageDialog(null,"Usuario editado com sucesso!");
+            }else{
+             dao.salvar(usuario);
+            JOptionPane.showMessageDialog(null,"Usuario salvo com sucesso!");
+        }
         limparCampos();
        }
            
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+       ConsultarUsuario consultar = new ConsultarUsuario();
+       consultar.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -221,10 +233,8 @@ public class TelaUsuario extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaUsuario().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new TelaUsuario().setVisible(true);
         });
     }
 
